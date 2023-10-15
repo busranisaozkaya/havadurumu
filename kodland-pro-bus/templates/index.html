@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hava Durumu Tahmini</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('serve_css', filename='styles.css') }}">
+
+</head>
+<body>
+<div class="container horizontal-center">
+    {% include 'navbar.html' %}
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+
+            {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+            <div class="flash-messages">
+                {% for category, message in messages %}
+                <div class="flash-{{ category }}">{{ message }}</div>
+                {% endfor %}
+            </div>
+            {% endif %}
+            {% endwith %}
+
+            <div class="content">
+                <h1 class="text-center title-margin">Hava Durumu Tahmini</h1>
+                <form action="/" method="post" class="form-inline justify-content-center mb-4">
+                    <div class="form-group mb-1">
+                        <label for="city" class="mr-2">Şehir Adı:</label>
+                        <input type="text" id="city" name="city" required class="form-control mb-3">
+                    </div>
+                    <button type="submit" class="btn btn-primary ml-2">Hava Durumu Tahmininini Getir</button>
+                </form>
+
+                {% if processed_weather_data %}
+                <h2>{{ weather_data['location']['name'] }}</h2>
+                <div class="table-responsive">
+                    <table class="table table-light">
+                        <thead>
+                        <tr>
+                            <th>Gün</th>
+                            <th>Tarih</th>
+                            <th>Hava Durumu</th>
+                            <th>En Yüksek Sıcaklık (°C)</th>
+                            <th>En Düşük Sıcaklık (°C)</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for forecast in processed_weather_data %}
+                        <tr>
+                            <td>{{ forecast['turkish_day'] }}</td>
+                            <td>{{ forecast['date'] }}</td>
+                            <td>{{ forecast['condition'] }}</td>
+                            <td>{{ forecast['max_temp'] }}</td>
+                            <td>{{ forecast['min_temp'] }}</td>
+                        </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+</body>
+<footer class="footer fixed-bottom text-center">
+    <div class="container">
+        <p>Büşra Nisa Özkaya &copy; 2023</p>
+    </div>
+</footer>
+
+</html>

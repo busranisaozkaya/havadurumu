@@ -1,0 +1,26 @@
+<nav class="navigation mb-4">
+    <ul class="nav nav-pills justify-content-center">
+        <li class="nav-item">
+            <a class="nav-link" href="/">Ana Sayfa</a>
+        </li>
+        {% if logged_in %}
+        <li class="nav-item">
+            <a class="nav-link" href="/quiz">Sınav</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="/logout">Çıkış Yap</a>
+        </li>
+        {% else %}
+        <li class="nav-item">
+            <a class="nav-link" href="/login">Giriş Yap</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="/register">Kayıt Ol</a>
+        </li>
+        {% endif %}
+
+        <li class="nav-item">
+            <a class="nav-link" href="/leaderboard">Liderlik Tablosu</a>
+        </li>
+    </ul>
+</nav>
